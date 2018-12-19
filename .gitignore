@@ -1,0 +1,5 @@
+bin
+build
+.mnist
+.vscode
+**/.DS_Store
