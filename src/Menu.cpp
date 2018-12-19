@@ -4,9 +4,11 @@
 
 #include "Menu.hpp"
 #include "DataMnist.hpp"
+#include "ClassifierBPNet.hpp"
 
 Menu::Menu() {
     data = nullptr;
+    classifier = nullptr;
 }
 
 Menu *Menu::getInstance() {
@@ -37,13 +39,20 @@ void Menu::showMenu() {
     printf("Welcome to Handwritten Digit Recognition!\n\n");
     printf("Loaded data: ");
     if (!data) {
+        printf("NULL\n");
+    } else {
+        printf("%s\n", data->name().c_str());
+    }
+    printf("Classifier: ");
+    if (!classifier) {
         printf("NULL\n\n");
     } else {
-        printf("%s\n\n", data->name().c_str());
+        printf("%s\n\n", classifier->name().c_str());
     }
     printf("load-mnist -- Load data (MNIST).\n");
-    printf("show -- Show some data.\n");
-    printf("3-bp -- Perform a 3-layer BP network.\n");
+    if (data) printf("show -- Show some data.\n");
+    if (data) printf("bp-net -- Train and test a 3-layer BP network(784-20-10).\n");
+    if (classifier) printf("test -- Pick an image from the test set.\n");
     printf("exit -- Exit the program.\n\n");
 }
 
@@ -64,8 +73,11 @@ void Menu::execCommand(std::string cmd) {
         } else {
             data->show();
         }
-    } else if (cmd == "3-bp") {
-
+    } else if (cmd == "bp-net") {
+        classifier = new ClassifierBPNet(20, 80000, 0.01, data);
+        classifier->train();
+    } else if (cmd == "test" || cmd == "t") {
+        classifier->pick();
     } else {
         printf("[ERROR]invalid command\n");
     }

@@ -32,8 +32,29 @@ DataMnist::DataMnist() {
     printf("loading complete\n");
 }
 
+void DataMnist::fetchNextTrain(std::vector<uint8_t> &img,
+    uint8_t &label) const {
+    static int pos = 0;
+    std::vector<uint8_t> ret(trainingImg[pos]);
+    img = ret;
+    label = trainingLbl[pos];
+    pos++;
+    if (pos == trainingImg.size())
+        pos = 0;
+}
+
 std::string DataMnist::name() const {
     return std::string("MNIST");
+}
+
+int DataMnist::dim() const {
+    return 784;
+}
+
+void DataMnist::getTest(std::vector< std::vector<uint8_t> > &imgs,
+    std::vector<uint8_t> &labels) const {
+    imgs = testImg;
+    labels = testLbl;
 }
 
 void DataMnist::show() const {
@@ -45,6 +66,12 @@ void DataMnist::show() const {
     printf("The %d image in the test set:\n", pos);
     printImg(testImg[pos]);
     printf("Label: %d\n", testLbl[pos]);
+}
+
+void DataMnist::pickTest(std::vector<uint8_t> &img, uint8_t &label) const {
+    int pos = rand() % testImg.size();
+    img = testImg[pos];
+    label = testLbl[pos];
 }
 
 void DataMnist::printImg(const std::vector<uint8_t> &img) const {

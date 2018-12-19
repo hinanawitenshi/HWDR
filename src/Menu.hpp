@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Data.hpp"
+#include "Classifier.hpp"
 
 class Menu {
 public:
@@ -16,4 +17,5 @@ private:
     void execCommand(std::string cmd);
 
     Data *data;
+    Classifier *classifier;
 };
