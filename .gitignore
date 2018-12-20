@@ -3,3 +3,4 @@ build
 .mnist
 .vscode
 **/.DS_Store
+res/report

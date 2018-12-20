@@ -98,24 +98,6 @@ void ClassifierBPNet::backPropagation(uint8_t label) {
     for (int i = 0; i < E2.size(); i++) {
         E2[i] = costPD(label, i) * softmaxD(A2[i]);
     }
-    // printf("Label: %d\n", label);
-    // for (int row = 0; row < 28; row++) {
-    //     for (int col = 0; col < 28; col++) {
-    //         double pix = Z0[row * 28 + col];
-    //         if (!pix) {
-    //             printf("*");
-    //         } else {
-    //             printf(" ");
-    //         }
-    //     }
-    //     printf("\n");
-    // }
-    // printf("Z2: ");
-    // for (int i = 0; i < Z2.size(); i++) printf("%f ", Z2[i]); printf("\n");
-    // printf("A2: ");
-    // for (int i = 0; i < A2.size(); i++) printf("%f ", A2[i]); printf("\n");
-    // printf("E2: ");
-    // for (int i = 0; i < E2.size(); i++) printf("%f ", E2[i]); printf("\n");
     for (int i = 0; i < E1.size(); i++) {
         E1[i] = 0.0;
         for (int j = 0; j < W2[i].size(); j++) {
@@ -123,16 +105,6 @@ void ClassifierBPNet::backPropagation(uint8_t label) {
         }
         E1[i] *= reluD(Z1[i]);
     }
-    // printf("E1: ");
-    // for (int i = 0; i < E1.size(); i++) printf("%f ", E1[i]); printf("\n");
-    // printf("A1: ");
-    // for (int i = 0; i < A1.size(); i++) printf("%f ", A1[i]); printf("\n");
-    // for (int i = 0; i < Z2.size(); i++) {
-    //     if (Z2[i] != Z2[i]) {
-    //         abort();
-    //     }
-    // }
-
     // update weights
     for (int i = 0; i < W1.size(); i++) {
         for (int j = 0; j < W1[i].size(); j++) {
